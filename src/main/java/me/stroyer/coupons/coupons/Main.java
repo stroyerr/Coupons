@@ -38,5 +38,6 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        SaveCoupons.save();
     }
 }

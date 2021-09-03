@@ -58,6 +58,34 @@ public class coupon implements CommandExecutor {
                     return true;
                 }
             }
+        }else if(argsList.get(0).equals("rebuild")){
+            if (argsList.get(1).equals("confirm")){
+                Send.message(p, "Rebuilding...");
+                Coupons.build();
+                Send.message(p, "Rebuilt with array size of " + Coupons.coupons.size());
+            }else{
+                Send.message(p, "Do not rebuild unless you know what you are doing! Type /rebuild confirm to rebuild data storage arrays.");
+            }
+        }else if(argsList.get(0).equals("get")){
+            if(argsList.size() == 2){
+                String name;
+                CouponObject coupon;
+                Boolean isFound = false;
+                for(int i = 0; i < Coupons.coupons.size(); i++){
+                    if(Coupons.coupons.get(i).name.equals(argsList.get(2))){
+                        isFound = true;
+                        name = Coupons.coupons.get(i).name;
+                        coupon = Coupons.coupons.get(i);
+                        Send.message(p, "Found Coupon " + name + " [id: " + i +"].");
+                        break;
+                    }
+                }
+                if(!isFound){
+                    Send.message(p, "Coupon does not exist.");
+                }
+            }else{
+                Send.message(p, "Invalid syntax. Use /c get <Coupon Name>");
+            }
         }
 
         return true;

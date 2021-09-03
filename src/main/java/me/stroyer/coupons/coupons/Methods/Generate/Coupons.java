@@ -29,7 +29,8 @@ public class Coupons implements Serializable {
     //Called to rebuild local temporary array from storage
     public static void build(){
         List<CouponObject> newList = LoadCoupons.load();
-        getLogger().info( "Original obj1 name: " + coupons.get(0).name + ", new obj1 name: " + newList.get(0).name);
+        coupons = newList;
+        //getLogger().info( "Original obj1 name: " + coupons.get(0).name + ", new obj1 name: " + newList.get(0).name);
     }
 
     public static void save(){

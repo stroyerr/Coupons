@@ -1,6 +1,8 @@
 package me.stroyer.coupons.coupons.Methods;
 
-public class CouponObject {
+import java.io.Serializable;
+
+public class CouponObject implements Serializable {
 
     public String command;
     public String type;
