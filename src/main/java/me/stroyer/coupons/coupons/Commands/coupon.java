@@ -2,6 +2,7 @@ package me.stroyer.coupons.coupons.Commands;
 
 import me.stroyer.coupons.coupons.Main;
 import me.stroyer.coupons.coupons.Methods.CouponObject;
+import me.stroyer.coupons.coupons.Methods.GameHandler.CouponItem;
 import me.stroyer.coupons.coupons.Methods.Generate.Coupons;
 import me.stroyer.coupons.coupons.Methods.Send;
 import org.bukkit.command.Command;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.bukkit.Bukkit.getLogger;
 
 public class coupon implements CommandExecutor {
 
@@ -72,11 +75,12 @@ public class coupon implements CommandExecutor {
                 CouponObject coupon;
                 Boolean isFound = false;
                 for(int i = 0; i < Coupons.coupons.size(); i++){
-                    if(Coupons.coupons.get(i).name.equals(argsList.get(2))){
+                    if(Coupons.coupons.get(i).name.equals(argsList.get(1))){
                         isFound = true;
                         name = Coupons.coupons.get(i).name;
                         coupon = Coupons.coupons.get(i);
-                        Send.message(p, "Found Coupon " + name + " [id: " + i +"].");
+                        Send.message(p, "Found Coupon " + name + " [id: " + (i+1) +"] with " + coupon.type +" command of '" + coupon.command+"'.");
+                        CouponItem item = new CouponItem(p, coupon.name);
                         break;
                     }
                 }
@@ -85,6 +89,12 @@ public class coupon implements CommandExecutor {
                 }
             }else{
                 Send.message(p, "Invalid syntax. Use /c get <Coupon Name>");
+            }
+        }else if(argsList.get(0).equals("list")){
+            List<CouponObject> listItems = new ArrayList<CouponObject>();
+            listItems = Coupons.coupons;
+            for(int i = 0; i < listItems.size(); i++){
+                Send.message(p, "Voucher: " + listItems.get(i).name + "; Sender: " + listItems.get(i).type + "; Command: " + listItems.get(i).command );
             }
         }
 
