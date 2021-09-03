@@ -1,13 +1,19 @@
 package me.stroyer.coupons.coupons.Methods.Generate;
 
 import me.stroyer.coupons.coupons.Methods.CouponObject;
+import me.stroyer.coupons.coupons.Methods.FileManagement.LoadCoupons;
+import me.stroyer.coupons.coupons.Methods.FileManagement.SaveCoupons;
+import me.stroyer.coupons.coupons.Methods.Send;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Coupons {
+import static org.bukkit.Bukkit.getLogger;
 
-    public List<CouponObject> coupons = new ArrayList<CouponObject>();
+public class Coupons implements Serializable {
+
+    public static List<CouponObject> coupons = new ArrayList<CouponObject>();
 
     /*
     On load, the build function is called to biuld the array from the hard save. After the first build, the list is saved as
@@ -20,7 +26,19 @@ public class Coupons {
     the build function. The built array is then modified to remove the selected object, then is saved and rebuilt.
      */
 
-    public static void create(CouponObject c){
+    //Called to rebuild local temporary array from storage
+    public static void build(){
+        List<CouponObject> newList = LoadCoupons.load();
+        getLogger().info( "Original obj1 name: " + coupons.get(0).name + ", new obj1 name: " + newList.get(0).name);
+    }
 
+    public static void save(){
+        SaveCoupons.save();
+    }
+
+    public static void create(CouponObject c){
+        getLogger().info("attempting add to list");
+        coupons.add(c);
+        save();
     }
 }
