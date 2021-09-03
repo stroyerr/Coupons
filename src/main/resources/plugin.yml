@@ -1,0 +1,11 @@
+name: Coupons
+version: ${project.version}
+main: me.stroyer.coupons.coupons.Main
+api-version: 1.17
+authors: [ Stroyer_ ]
+description: Coupons plugin by Stroyer
+commands:
+  coupon:
+    usage: /<command>
+    aliases: [c, coupons, coup]
+    description: General command
