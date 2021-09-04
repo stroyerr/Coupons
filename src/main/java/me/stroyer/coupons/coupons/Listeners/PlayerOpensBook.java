@@ -1,10 +1,13 @@
 package me.stroyer.coupons.coupons.Listeners;
 
+import me.stroyer.coupons.coupons.ExecuteCommand.ConsoleCommand;
 import me.stroyer.coupons.coupons.Methods.CouponObject;
 import me.stroyer.coupons.coupons.Methods.Generate.Coupons;
 import me.stroyer.coupons.coupons.Methods.Send;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,11 +35,9 @@ public class PlayerOpensBook implements Listener {
                             return;
                         }
                         if(bm.getGeneration() == (BookMeta.Generation.ORIGINAL)) {
-                            Send.message(e.getPlayer(), "Using coupon now.");
                             if(bm.hasDisplayName()){
                                 String[] couponNameArray = bm.getDisplayName().split(" ");
                                 String couponName = ChatColor.stripColor(couponNameArray[0]);
-                                Send.message(p, "Attempting to authenticate token of  " + couponName);
                                 Coupons.build();
                                 List<CouponObject> couponsList = Coupons.coupons;
                                 Boolean foundCoupon = false;
@@ -51,7 +52,19 @@ public class PlayerOpensBook implements Listener {
                                     }
                                 }
                                 if(foundCoupon){
-                                    Send.message(p, "found coupon name " + couponObj.name + " executor " + couponObj.type + " command " + couponObj.command);
+                                    String commandToExecute = couponObj.command;
+                                    String command =  commandToExecute;
+                                    if(couponObj.type.equals("CONSOLE")){
+                                        ConsoleCommand.send(command, p);
+                                    }else if(couponObj.type.equals("PLAYER")){
+                                        p.chat("/" + couponObj.command);
+                                    }else{
+                                        Send.message(p, "Coupon is corrupt. Please contact Stroyer_ immediately.");
+                                    }
+                                    e.setCancelled(true);
+                                    p.getInventory().removeItem(book);
+                                    Bukkit.broadcastMessage(ChatColor.RED + "Lonely" + ChatColor.GOLD + "MC" + ChatColor.GRAY + "Coupons // " + ChatColor.YELLOW + p.getName() + ChatColor.LIGHT_PURPLE + " used a " + ChatColor.YELLOW + couponObj.name + ChatColor.LIGHT_PURPLE + " coupon!");
+
                                 }else{
                                     Send.message(p, "This coupon does not exist or is expired! If you believe this is an error, contact staff.");
                                 }
