@@ -34,6 +34,7 @@ public class coupon implements CommandExecutor {
 
         if(args.length == 0){
             Send.message(p, "Coupons plugin developed by Stroyer_ for LonelyMC. Use /coupons help for commands.");
+            return true;
         }
 
         if(argsList.contains("create")){
@@ -96,6 +97,23 @@ public class coupon implements CommandExecutor {
             for(int i = 0; i < listItems.size(); i++){
                 Send.message(p, "Voucher: " + listItems.get(i).name + "; Sender: " + listItems.get(i).type + "; Command: " + listItems.get(i).command );
             }
+            if(listItems.size() == 0){
+                Send.message(p, "No coupons have been created. Create a coupon with /c create");
+            }
+        }else if(argsList.get(0).equals("delete")){
+            if(argsList.size() == 2){
+                String s = argsList.get(1);
+                boolean deleted = Coupons.delete(s);
+                if(deleted){
+                    Send.message(p, "Deleted Coupon.");
+                }else{
+                    Send.message(p, "Something went wrong. Ensure that the coupon you entered exists on /c list");
+                }
+            }else{
+                Send.message(p, "Invalid syntax. Use /c delete <Coupon Name>");
+            }
+        }else{
+            Send.message(p, "Invalid command. Use /c help.");
         }
 
         return true;

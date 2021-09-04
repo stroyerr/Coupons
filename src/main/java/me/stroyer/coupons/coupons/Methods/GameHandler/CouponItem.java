@@ -19,6 +19,7 @@ public class CouponItem {
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("Open this book to redeem your coupon!");
         bm.setLore(lore);
+        bm.setGeneration(BookMeta.Generation.ORIGINAL);
         item.setItemMeta(bm);
         p.getInventory().addItem(item);
     }

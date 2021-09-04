@@ -42,4 +42,17 @@ public class Coupons implements Serializable {
         coupons.add(c);
         save();
     }
+
+    public static boolean delete(String name){
+        build();
+        for(int i = 0; i < coupons.size(); i ++){
+            if(coupons.get(i).name.equals(name)){
+                coupons.remove(i);
+                save();
+                build();
+                return true;
+            }
+        }
+        return false;
+    }
 }

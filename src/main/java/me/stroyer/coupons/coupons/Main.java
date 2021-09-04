@@ -1,6 +1,7 @@
 package me.stroyer.coupons.coupons;
 
 import me.stroyer.coupons.coupons.Commands.coupon;
+import me.stroyer.coupons.coupons.Listeners.PlayerOpensBook;
 import me.stroyer.coupons.coupons.Methods.FileManagement.SaveCoupons;
 import me.stroyer.coupons.coupons.Methods.Generate.Coupons;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +20,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getCommand("coupon").setExecutor(new coupon(this));
+        getServer().getPluginManager().registerEvents(new PlayerOpensBook(), this);
 
         try{
             Path path = Paths.get("./plugins/Coupons");
